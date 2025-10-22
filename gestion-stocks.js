@@ -1,6 +1,9 @@
 (function ($) {
     'use strict';
 
+    let productsLoaded = false;
+    let movementsLoaded = false;
+
     const $navigation = $('.menu-navigation');
     if ($navigation.length) {
         const $links = $navigation.find('[data-view]');
@@ -27,6 +30,14 @@
             $links.removeClass('active');
             if (view) {
                 $links.filter(`[data-view="${view}"]`).addClass('active');
+
+                if (view === 'products' && typeof loadProducts === 'function' && !productsLoaded) {
+                    loadProducts().catch(showError);
+                }
+
+                if (view === 'movements' && typeof loadMovements === 'function' && !movementsLoaded) {
+                    loadMovements().catch(showError);
+                }
             }
         };
 
@@ -90,7 +101,7 @@
     const refreshButton = document.querySelector('#stocks-refresh');
     if (refreshButton) {
         refreshButton.addEventListener('click', () => {
-            loadAll();
+            loadAll({ force: true }).catch(showError);
         });
     }
 
@@ -204,33 +215,88 @@
         renderProducts(searchInput?.value || '');
     });
 
-    function loadAll() {
-        Promise.all([
-            request('sempa_stocks_dashboard'),
-            request('sempa_stocks_products'),
-            request('sempa_stocks_movements'),
-            request('sempa_stocks_reference_data')
-        ])
-            .then(([dashboardData, productData, movementData, referenceData]) => {
-                if (dashboardData?.success) {
-                    renderDashboard(dashboardData.data);
-                }
-                if (productData?.success) {
-                    state.products = productData.data.products || [];
+    function loadDashboard() {
+        return request('sempa_stocks_dashboard').then((response) => {
+            if (response?.success) {
+                renderDashboard(response.data);
+            }
+            return response;
+        });
+    }
+
+    function loadReferenceData() {
+        return request('sempa_stocks_reference_data').then((response) => {
+            if (response?.success) {
+                state.categories = response.data.categories || [];
+                state.suppliers = response.data.suppliers || [];
+                populateSelects();
+            }
+            return response;
+        });
+    }
+
+    function loadProducts(options = {}) {
+        const config = typeof options === 'boolean' ? { force: options } : options;
+        const force = Boolean(config?.force);
+
+        if (productsLoaded && !force) {
+            return Promise.resolve();
+        }
+
+        return request('sempa_stocks_products')
+            .then((response) => {
+                if (response?.success) {
+                    state.products = response.data.products || [];
                     renderProducts();
                     updateMovementSelect();
+                    productsLoaded = true;
                 }
-                if (movementData?.success) {
-                    state.movements = movementData.data.movements || [];
-                    renderMovements();
-                }
-                if (referenceData?.success) {
-                    state.categories = referenceData.data.categories || [];
-                    state.suppliers = referenceData.data.suppliers || [];
-                    populateSelects();
-                }
+                return response;
             })
-            .catch(showError);
+            .catch((error) => {
+                productsLoaded = false;
+                throw error;
+            });
+    }
+
+    function loadMovements(options = {}) {
+        const config = typeof options === 'boolean' ? { force: options } : options;
+        const force = Boolean(config?.force);
+
+        if (movementsLoaded && !force) {
+            return Promise.resolve();
+        }
+
+        return request('sempa_stocks_movements')
+            .then((response) => {
+                if (response?.success) {
+                    state.movements = response.data.movements || [];
+                    renderMovements();
+                    movementsLoaded = true;
+                }
+                return response;
+            })
+            .catch((error) => {
+                movementsLoaded = false;
+                throw error;
+            });
+    }
+
+    function loadAll(options = {}) {
+        const config = typeof options === 'boolean' ? { force: options } : options;
+        const force = Boolean(config?.force);
+
+        if (force) {
+            productsLoaded = false;
+            movementsLoaded = false;
+        }
+
+        return Promise.all([
+            loadDashboard(),
+            loadProducts({ force }),
+            loadMovements({ force }),
+            loadReferenceData()
+        ]);
     }
 
     function request(action, formData) {
@@ -883,5 +949,8 @@
         }
     });
 
-    loadAll();
+    Promise.all([
+        loadDashboard(),
+        loadReferenceData()
+    ]).catch(showError);
 })(jQuery);
