@@ -209,6 +209,11 @@ final class Sempa_Stocks_App
         $user = wp_get_current_user();
         $id = isset($data['id']) ? absint($data['id']) : 0;
 
+        // Check database connection
+        if (!($db instanceof \wpdb) || empty($db->dbh)) {
+            wp_send_json_error(['message' => __('Impossible de se connecter à la base de données.', 'sempa')], 500);
+        }
+
         if (!Sempa_Stocks_DB::table_exists('stocks_sempa')) {
             wp_send_json_error(['message' => __('La table des stocks est indisponible.', 'sempa')], 500);
         }
@@ -297,6 +302,12 @@ final class Sempa_Stocks_App
         }
 
         $db = Sempa_Stocks_DB::instance();
+
+        // Check database connection
+        if (!($db instanceof \wpdb) || empty($db->dbh)) {
+            wp_send_json_error(['message' => __('Impossible de se connecter à la base de données.', 'sempa')], 500);
+        }
+
         if (!Sempa_Stocks_DB::table_exists('stocks_sempa')) {
             wp_send_json_error(['message' => __('La table des stocks est indisponible.', 'sempa')], 500);
         }
@@ -377,6 +388,12 @@ final class Sempa_Stocks_App
         }
 
         $db = Sempa_Stocks_DB::instance();
+
+        // Check database connection
+        if (!($db instanceof \wpdb) || empty($db->dbh)) {
+            wp_send_json_error(['message' => __('Impossible de se connecter à la base de données.', 'sempa')], 500);
+        }
+
         if (!Sempa_Stocks_DB::table_exists('stocks_sempa')) {
             wp_send_json_error(['message' => __('La table des stocks est indisponible.', 'sempa')], 500);
         }
@@ -503,6 +520,12 @@ final class Sempa_Stocks_App
         }
 
         $db = Sempa_Stocks_DB::instance();
+
+        // Check database connection
+        if (!($db instanceof \wpdb) || empty($db->dbh)) {
+            wp_die(__('Impossible de se connecter à la base de données.', 'sempa'), 500);
+        }
+
         if (!Sempa_Stocks_DB::table_exists('stocks_sempa')) {
             wp_die(__('La table des stocks est indisponible.', 'sempa'), 500);
         }
@@ -602,6 +625,12 @@ final class Sempa_Stocks_App
         }
 
         $db = Sempa_Stocks_DB::instance();
+
+        // Check database connection
+        if (!($db instanceof \wpdb) || empty($db->dbh)) {
+            wp_send_json_error(['message' => __('Impossible de se connecter à la base de données.', 'sempa')], 500);
+        }
+
         if (!Sempa_Stocks_DB::table_exists('categories_stocks')) {
             wp_send_json_error(['message' => __('La table des catégories est indisponible.', 'sempa')], 500);
         }
@@ -647,6 +676,12 @@ final class Sempa_Stocks_App
         }
 
         $db = Sempa_Stocks_DB::instance();
+
+        // Check database connection
+        if (!($db instanceof \wpdb) || empty($db->dbh)) {
+            wp_send_json_error(['message' => __('Impossible de se connecter à la base de données.', 'sempa')], 500);
+        }
+
         if (!Sempa_Stocks_DB::table_exists('fournisseurs_sempa')) {
             wp_send_json_error(['message' => __('La table des fournisseurs est indisponible.', 'sempa')], 500);
         }
