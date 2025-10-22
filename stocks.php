@@ -61,12 +61,12 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                     </div>
                 </div>
                 <nav class="stockpilot-sidebar__nav">
-                    <ul>
-                        <li class="is-active"><a href="#stockpilot-dashboard"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Tableau de bord', 'sempa'); ?></a></li>
-                        <li><a href="#stockpilot-products"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Produits', 'sempa'); ?></a></li>
-                        <li><a href="#stockpilot-movements"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Mouvements', 'sempa'); ?></a></li>
-                        <li><a href="#stockpilot-reports"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Rapports', 'sempa'); ?></a></li>
-                        <li><a href="#stockpilot-settings"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Paramètres', 'sempa'); ?></a></li>
+                    <ul class="menu-navigation">
+                        <li><a href="#view-dashboard" data-view="dashboard" class="active"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Tableau de bord', 'sempa'); ?></a></li>
+                        <li><a href="#view-products" data-view="products"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Produits', 'sempa'); ?></a></li>
+                        <li><a href="#view-movements" data-view="movements"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Mouvements', 'sempa'); ?></a></li>
+                        <li><a href="#view-reports" data-view="reports"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Rapports', 'sempa'); ?></a></li>
+                        <li><a href="#view-settings" data-view="settings"><span class="nav-icon" aria-hidden="true"></span><?php esc_html_e('Paramètres', 'sempa'); ?></a></li>
                     </ul>
                 </nav>
                 <div class="stockpilot-sidebar__user">
@@ -104,7 +104,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                 </header>
 
                 <main class="stockpilot-content">
-                    <section class="stockpilot-section" id="stockpilot-dashboard" aria-labelledby="stocks-dashboard-title">
+                    <section class="stockpilot-section main-view" id="view-dashboard" aria-labelledby="stocks-dashboard-title">
                         <div class="section-header">
                             <div>
                                 <p class="section-eyebrow"><?php esc_html_e('Vue d\'ensemble', 'sempa'); ?></p>
@@ -166,7 +166,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                         </div>
                     </section>
 
-                    <section class="stockpilot-section" id="stockpilot-products" aria-labelledby="stocks-products-title">
+                    <section class="stockpilot-section main-view" id="view-products" aria-labelledby="stocks-products-title">
                         <div class="section-header">
                             <div>
                                 <p class="section-eyebrow"><?php esc_html_e('Catalogue', 'sempa'); ?></p>
@@ -219,7 +219,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                         </div>
                     </section>
 
-                    <section class="stockpilot-section" id="stockpilot-movements" aria-labelledby="stocks-movements-title">
+                    <section class="stockpilot-section main-view" id="view-movements" aria-labelledby="stocks-movements-title">
                         <div class="section-header">
                             <div>
                                 <p class="section-eyebrow"><?php esc_html_e('Suivi des flux', 'sempa'); ?></p>
@@ -251,7 +251,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                         </div>
                     </section>
 
-                    <section class="stockpilot-section" id="stockpilot-reports" aria-labelledby="stocks-reports-title">
+                    <section class="stockpilot-section main-view" id="view-reports" aria-labelledby="stocks-reports-title">
                         <div class="section-header">
                             <div>
                                 <p class="section-eyebrow"><?php esc_html_e('Pilotage', 'sempa'); ?></p>
@@ -273,7 +273,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                         </div>
                     </section>
 
-                    <section class="stockpilot-section" id="stockpilot-settings" aria-labelledby="stockpilot-settings-title">
+                    <section class="stockpilot-section main-view" id="view-settings" aria-labelledby="stockpilot-settings-title">
                         <div class="section-header">
                             <div>
                                 <p class="section-eyebrow"><?php esc_html_e('Automations', 'sempa'); ?></p>

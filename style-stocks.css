@@ -213,7 +213,7 @@
     color: #ffffff;
 }
 
-.stockpilot-sidebar__nav li.is-active a {
+.stockpilot-sidebar__nav li a.active {
     background: rgba(244, 164, 18, 0.24);
     color: #ffffff;
 }
@@ -795,6 +795,12 @@
     overflow-x: auto;
 }
 
+#products-table-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+}
+
 .table-wrapper--elevated {
     box-shadow: var(--sp-shadow-md);
 }
@@ -811,6 +817,13 @@
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-size: 0.75rem;
+}
+
+#products-table-container .stocks-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--sp-color-surface-alt);
 }
 
 .stocks-table th,

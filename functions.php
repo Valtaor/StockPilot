@@ -79,45 +79,8 @@ final class Sempa_App
 }
 
 
-// ==============================================================
-// 3. ENREGISTREMENT DES HOOKS AJAX POUR LA GESTION DES STOCKS
-//    Ces lignes connectent les actions AJAX aux fonctions PHP définies dans functions_stocks.php
-// ==============================================================
-
-// Assurez-vous que les noms des fonctions ('inventory_get_products_ajax', etc.)
-// correspondent EXACTEMENT aux noms des fonctions définies dans includes/functions_stocks.php
-
-if (function_exists('inventory_get_products_ajax')) { // Vérifie si la fonction existe avant d'ajouter l'action
-    add_action('wp_ajax_get_products', 'inventory_get_products_ajax');
-} else {
-    error_log("Fonction AJAX manquante: inventory_get_products_ajax");
-}
-
-if (function_exists('inventory_add_product_ajax')) {
-    add_action('wp_ajax_add_product', 'inventory_add_product_ajax');
-} else {
-     error_log("Fonction AJAX manquante: inventory_add_product_ajax");
-}
-
-if (function_exists('inventory_update_product_ajax')) {
-    add_action('wp_ajax_update_product', 'inventory_update_product_ajax');
-} else {
-     error_log("Fonction AJAX manquante: inventory_update_product_ajax");
-}
-
-if (function_exists('inventory_delete_product_ajax')) {
-    add_action('wp_ajax_delete_product', 'inventory_delete_product_ajax');
-} else {
-     error_log("Fonction AJAX manquante: inventory_delete_product_ajax");
-}
-
-// Ajoutez ici d'autres hooks AJAX nécessaires pour Sempa (catégories, commandes, etc.)
-// if (function_exists('add_category_ajax')) { add_action('wp_ajax_add_category', 'add_category_ajax'); }
-// etc.
-
-
 // ===========================================
-// 4. APPEL DE L'INITIALISATION (à la fin)
+// 3. APPEL DE L'INITIALISATION (à la fin)
 // ===========================================
 Sempa_App::boot();
 
