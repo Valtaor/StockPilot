@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 require_once __DIR__ . '/db_connect_stocks.php';
+require_once __DIR__ . '/db_schema_setup.php';
 
 final class Sempa_Stocks_App
 {
@@ -14,6 +15,9 @@ final class Sempa_Stocks_App
 
     public static function register()
     {
+        // Ensure database schema is up to date
+        Sempa_Stocks_Schema_Setup::ensure_schema();
+
         add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_assets']);
         add_action('wp_ajax_sempa_stocks_dashboard', [__CLASS__, 'ajax_dashboard']);
         add_action('wp_ajax_sempa_stocks_products', [__CLASS__, 'ajax_products']);

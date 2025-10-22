@@ -299,6 +299,16 @@ if (!class_exists('Sempa_Stocks_DB')) {
             return !empty(self::$table_cache[$key]);
         }
 
+        /**
+         * Clear all internal caches (table names and column names)
+         * Useful after creating or modifying tables
+         */
+        public static function clear_cache(): void
+        {
+            self::$table_cache = [];
+            self::$columns_cache = [];
+        }
+
         private static function get_table_columns(string $table): array
         {
             $table_key = strtolower($table);
