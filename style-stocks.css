@@ -213,7 +213,7 @@
     color: #ffffff;
 }
 
-.stockpilot-sidebar__nav li.is-active a {
+.stockpilot-sidebar__nav li a.active {
     background: rgba(244, 164, 18, 0.24);
     color: #ffffff;
 }

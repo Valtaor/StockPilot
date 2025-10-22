@@ -4,13 +4,25 @@
     let productsLoaded = false;
     let movementsLoaded = false;
 
+    const $views = $('.main-view');
+    const $dashboard = $('#view-dashboard');
+
+    if ($views.length) {
+        $views.hide();
+        if ($dashboard.length) {
+            $dashboard.show();
+        } else {
+            $views.first().show();
+        }
+    }
+
     const $navigation = $('.menu-navigation');
     if ($navigation.length) {
-        const $links = $navigation.find('[data-view]');
-        const $views = $('.main-view');
+        const $links = $navigation.find('a[data-view]');
 
-        const showView = (view) => {
-            let $target = view ? $(`#view-${view}`) : $();
+        const showView = (rawView) => {
+            let view = rawView;
+            let $target = view ? $views.filter(`#view-${view}`) : $();
 
             $views.hide();
 
