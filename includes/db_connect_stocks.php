@@ -116,7 +116,11 @@ if (!class_exists('Sempa_Stocks_DB')) {
                 return $name;
             }
 
-            if (!($db instanceof \wpdb)) {
+            if (!($db instanceof \wpdb) || empty($db->dbh)) {
+                if (function_exists('error_log')) {
+                    error_log('[Sempa] Database connection not established when resolving table ' . $name);
+                }
+
                 self::$table_cache[$key] = false;
 
                 return $name;
@@ -323,7 +327,11 @@ if (!class_exists('Sempa_Stocks_DB')) {
                 return [];
             }
 
-            if (!($db instanceof \wpdb)) {
+            if (!($db instanceof \wpdb) || empty($db->dbh)) {
+                if (function_exists('error_log')) {
+                    error_log('[Sempa] Database connection not established when inspecting columns for ' . $table);
+                }
+
                 self::$columns_cache[$table_key] = [];
 
                 return [];
