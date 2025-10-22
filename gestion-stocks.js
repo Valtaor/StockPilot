@@ -1,6 +1,48 @@
 (function ($) {
     'use strict';
 
+    const $navigation = $('.menu-navigation');
+    if ($navigation.length) {
+        const $links = $navigation.find('[data-view]');
+        const $views = $('.main-view');
+
+        const showView = (view) => {
+            let $target = view ? $(`#view-${view}`) : $();
+
+            $views.hide();
+
+            if (!$target.length && $views.length) {
+                $target = $views.first();
+                const fallbackId = $target.attr('id') || '';
+                const fallbackView = fallbackId.replace(/^view-/, '');
+                if (fallbackView) {
+                    view = fallbackView;
+                }
+            }
+
+            if ($target.length) {
+                $target.show();
+            }
+
+            $links.removeClass('active');
+            if (view) {
+                $links.filter(`[data-view="${view}"]`).addClass('active');
+            }
+        };
+
+        const initialView = ($links.filter('.active').data('view') || 'dashboard');
+        showView(initialView);
+
+        $links.on('click', function (event) {
+            event.preventDefault();
+            const view = $(this).data('view');
+            if (!view) {
+                return;
+            }
+            showView(view);
+        });
+    }
+
     if (typeof SempaStocksData === 'undefined') {
         return;
     }
