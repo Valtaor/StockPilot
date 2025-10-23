@@ -28,6 +28,11 @@ if (file_exists($commandes_file)) {
 }
 // else { error_log("Fichier Sempa requis manquant: functions_commandes.php"); }
 
+$db_commandes_file = __DIR__ . '/includes/db_commandes.php';
+if (file_exists($db_commandes_file)) {
+    require_once $db_commandes_file;
+}
+
 
 // ===========================================
 // 2. DÉFINITION DES CLASSES PRINCIPALES
@@ -64,6 +69,7 @@ final class Sempa_App
         // Enregistrer les routes REST (si elles existent)
         if (class_exists('Sempa_Order_Route')) Sempa_Order_Route::register();
         if (class_exists('Sempa_Contact_Route')) Sempa_Contact_Route::register();
+        if (class_exists('Sempa_Order_Manager')) Sempa_Order_Manager::register();
 
         // Enregistrer les autres composants (si définis dans les includes)
         if (class_exists('Sempa_Stock_Permissions')) Sempa_Stock_Permissions::register();

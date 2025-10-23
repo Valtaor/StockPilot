@@ -243,7 +243,7 @@ if (!class_exists('Sempa_Order_Stock_Sync')) {
 
         private static function extract_product_id(array $product): int
         {
-            foreach (['id', 'productId', 'produit_id'] as $key) {
+            foreach (['product_id', 'id', 'productId', 'produit_id'] as $key) {
                 if (isset($product[$key]) && (int) $product[$key] > 0) {
                     return (int) $product[$key];
                 }
