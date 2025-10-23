@@ -54,11 +54,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
         <div class="stockpilot-app">
             <aside class="stockpilot-sidebar" role="navigation" aria-label="<?php esc_attr_e('Navigation principale', 'sempa'); ?>">
                 <div class="stockpilot-sidebar__brand">
-                    <img src="<?php echo esc_url(trailingslashit(get_stylesheet_directory_uri()) . 'logo-since-b.svg'); ?>" alt="<?php esc_attr_e('Logo SEMPA', 'sempa'); ?>" loading="lazy" />
-                    <div class="stockpilot-sidebar__titles">
-                        <span class="sidebar-app">StockPilot</span>
-                        <span class="sidebar-company"><?php esc_html_e('SEMPA Stocks', 'sempa'); ?></span>
-                    </div>
+                    <img src="https://sempa.fr/wp-content/uploads/2021/05/logo-since-w.svg" alt="<?php esc_attr_e('Logo SEMPA', 'sempa'); ?>" class="sidebar-logo" loading="lazy" />
                 </div>
                 <nav class="stockpilot-sidebar__nav">
                     <ul class="menu-navigation">
@@ -208,7 +204,10 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                                     <option value="100">100</option>
                                     <option value="all"><?php esc_html_e('Tous', 'sempa'); ?></option>
                                 </select>
-                                <span id="products-count-info"><?php esc_html_e('produits par page', 'sempa'); ?></span>
+                                <span><?php esc_html_e('par page', 'sempa'); ?></span>
+                            </div>
+                            <div class="pagination-status">
+                                <span id="products-count-info"><?php esc_html_e('Chargement...', 'sempa'); ?></span>
                             </div>
                             <div class="pagination-controls">
                                 <button type="button" id="products-prev-page" class="button button--ghost" disabled><?php esc_html_e('Précédent', 'sempa'); ?></button>

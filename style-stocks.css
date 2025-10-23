@@ -160,31 +160,14 @@
 .stockpilot-sidebar__brand {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    padding: 1.5rem 0;
 }
 
-.stockpilot-sidebar__brand img {
-    width: 48px;
-    height: 48px;
-}
-
-.stockpilot-sidebar__titles {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
-
-.sidebar-app {
-    font-size: 0.9rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.sidebar-company {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #ffffff;
+.sidebar-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
 }
 
 .stockpilot-sidebar__nav ul {
@@ -779,6 +762,14 @@
     gap: 0.75rem;
     font-size: 0.9rem;
     color: var(--sp-color-muted);
+}
+
+.pagination-status {
+    flex: 1;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--sp-color-text);
 }
 
 .pagination-info label {
@@ -1477,7 +1468,16 @@ textarea {
         z-index: 20;
     }
 
-    .stockpilot-sidebar__brand,
+    .stockpilot-sidebar__brand {
+        padding: 0;
+        margin-right: auto;
+    }
+
+    .sidebar-logo {
+        width: 60px;
+        height: 60px;
+    }
+
     .stockpilot-sidebar__user {
         display: none;
     }
@@ -1537,6 +1537,7 @@ textarea {
     }
 
     .pagination-info,
+    .pagination-status,
     .pagination-controls {
         justify-content: center;
     }
