@@ -1,0 +1,3 @@
+name,reference,minStock,purchasePrice,salePrice,category,description
+"Exemple Produit 1","REF-001",1,10.00,25.00,"piece","Description optionnelle du produit 1"
+"Exemple Produit 2","REF-002",5,15.50,38.00,"capot","Description optionnelle du produit 2"
