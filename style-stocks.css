@@ -759,6 +759,84 @@
     box-shadow: var(--sp-shadow-xs);
 }
 
+.products-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--sp-color-surface);
+    border: 1px solid var(--sp-color-border);
+    border-radius: var(--sp-radius-md);
+    padding: 0.9rem 1.3rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: var(--sp-shadow-xs);
+}
+
+.pagination-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--sp-color-muted);
+}
+
+.pagination-info label {
+    font-weight: 500;
+    color: var(--sp-color-text);
+}
+
+.pagination-info select {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--sp-color-border);
+    border-radius: var(--sp-radius-sm);
+    font-size: 0.9rem;
+    background: var(--sp-color-surface);
+    color: var(--sp-color-text);
+    cursor: pointer;
+    transition: border-color var(--sp-transition);
+}
+
+.pagination-info select:hover,
+.pagination-info select:focus {
+    border-color: var(--sp-color-primary);
+    outline: none;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pagination-page-info {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--sp-color-text);
+    min-width: 120px;
+    text-align: center;
+}
+
+#products-prev-page,
+#products-next-page {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+}
+
+#products-prev-page:disabled,
+#products-next-page:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#products-prev-page:disabled:hover,
+#products-next-page:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 .toolbar-field {
     display: flex;
     flex-direction: column;
@@ -1450,6 +1528,21 @@ textarea {
     .products-toolbar {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .products-pagination {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .pagination-info,
+    .pagination-controls {
+        justify-content: center;
+    }
+
+    .pagination-page-info {
+        min-width: auto;
     }
 
     .toolbar-actions {

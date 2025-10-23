@@ -199,6 +199,23 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                                 <button type="button" class="button button--ghost" id="stocks-clear-filters"><?php esc_html_e('Réinitialiser', 'sempa'); ?></button>
                             </div>
                         </div>
+                        <div class="products-pagination" role="group" aria-label="<?php esc_attr_e('Pagination des produits', 'sempa'); ?>">
+                            <div class="pagination-info">
+                                <label for="products-per-page"><?php esc_html_e('Afficher', 'sempa'); ?></label>
+                                <select id="products-per-page">
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                    <option value="all"><?php esc_html_e('Tous', 'sempa'); ?></option>
+                                </select>
+                                <span id="products-count-info"><?php esc_html_e('produits par page', 'sempa'); ?></span>
+                            </div>
+                            <div class="pagination-controls">
+                                <button type="button" id="products-prev-page" class="button button--ghost" disabled><?php esc_html_e('Précédent', 'sempa'); ?></button>
+                                <span id="products-page-info" class="pagination-page-info"><?php esc_html_e('Page 1 sur 1', 'sempa'); ?></span>
+                                <button type="button" id="products-next-page" class="button button--ghost" disabled><?php esc_html_e('Suivant', 'sempa'); ?></button>
+                            </div>
+                        </div>
                         <div class="table-wrapper table-wrapper--elevated">
                             <table class="stocks-table stocks-table--products" id="stocks-products-table">
                                 <thead>
