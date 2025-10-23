@@ -16,7 +16,7 @@ if (!class_exists('Sempa_Stocks_DB')) {
             'stocks_sempa' => ['stocks_sempa', 'stocks', 'products'],
             'mouvements_stocks_sempa' => ['mouvements_stocks_sempa', 'stock_movements', 'movements'],
             'categories_stocks' => ['categories_stocks', 'stock_categories', 'product_categories'],
-            'fournisseurs_sempa' => ['fournisseurs_sempa', 'stock_suppliers', 'suppliers'],
+            'fournisseurs_sempa' => ['fournisseurs', 'fournisseurs_sempa', 'stock_suppliers', 'suppliers'],
         ];
 
         private const COLUMN_ALIASES = [
@@ -65,9 +65,11 @@ if (!class_exists('Sempa_Stocks_DB')) {
             'fournisseurs_sempa' => [
                 'id' => ['id'],
                 'nom' => ['nom', 'name'],
-                'contact' => ['contact', 'contact_name'],
+                'contact' => ['nom_contact', 'contact', 'contact_name'],
+                'nom_contact' => ['nom_contact', 'contact', 'contact_name'],
                 'telephone' => ['telephone', 'phone', 'phone_number'],
                 'email' => ['email'],
+                'date_creation' => ['date_creation', 'created_at', 'date_ajout'],
             ],
         ];
 

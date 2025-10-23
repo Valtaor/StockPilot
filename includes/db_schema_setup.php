@@ -39,18 +39,17 @@ if (!class_exists('Sempa_Stocks_Schema_Setup')) {
                 return true; // Table already exists
             }
 
-            // Create the suppliers table
-            $sql = "CREATE TABLE IF NOT EXISTS `suppliers` (
+            // Create the suppliers table (fournisseurs)
+            $sql = "CREATE TABLE IF NOT EXISTS `fournisseurs` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
-                `nom` varchar(255) NOT NULL COMMENT 'Nom du fournisseur',
-                `contact` varchar(255) DEFAULT NULL COMMENT 'Personne de contact',
-                `telephone` varchar(50) DEFAULT NULL COMMENT 'Numéro de téléphone',
-                `email` varchar(255) DEFAULT NULL COMMENT 'Adresse email',
-                `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création',
-                `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Date de modification',
+                `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `nom_contact` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                `telephone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`),
-                KEY `idx_nom` (`nom`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Table des fournisseurs'";
+                UNIQUE KEY `nom_unique` (`nom`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 
             $result = $db->query($sql);
 
