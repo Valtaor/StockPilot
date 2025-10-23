@@ -54,11 +54,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
         <div class="stockpilot-app">
             <aside class="stockpilot-sidebar" role="navigation" aria-label="<?php esc_attr_e('Navigation principale', 'sempa'); ?>">
                 <div class="stockpilot-sidebar__brand">
-                    <img src="<?php echo esc_url(trailingslashit(get_stylesheet_directory_uri()) . 'logo-since-b.svg'); ?>" alt="<?php esc_attr_e('Logo SEMPA', 'sempa'); ?>" loading="lazy" />
-                    <div class="stockpilot-sidebar__titles">
-                        <span class="sidebar-app">StockPilot</span>
-                        <span class="sidebar-company"><?php esc_html_e('SEMPA Stocks', 'sempa'); ?></span>
-                    </div>
+                    <img src="https://sempa.fr/wp-content/uploads/2021/05/logo-since-w.svg" alt="<?php esc_attr_e('Logo SEMPA', 'sempa'); ?>" class="sidebar-logo" loading="lazy" />
                 </div>
                 <nav class="stockpilot-sidebar__nav">
                     <ul class="menu-navigation">
@@ -197,6 +193,26 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                             </div>
                             <div class="toolbar-actions">
                                 <button type="button" class="button button--ghost" id="stocks-clear-filters"><?php esc_html_e('Réinitialiser', 'sempa'); ?></button>
+                            </div>
+                        </div>
+                        <div class="products-pagination" role="group" aria-label="<?php esc_attr_e('Pagination des produits', 'sempa'); ?>">
+                            <div class="pagination-info">
+                                <label for="products-per-page"><?php esc_html_e('Afficher', 'sempa'); ?></label>
+                                <select id="products-per-page">
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                    <option value="all"><?php esc_html_e('Tous', 'sempa'); ?></option>
+                                </select>
+                                <span><?php esc_html_e('par page', 'sempa'); ?></span>
+                            </div>
+                            <div class="pagination-status">
+                                <span id="products-count-info"><?php esc_html_e('Chargement...', 'sempa'); ?></span>
+                            </div>
+                            <div class="pagination-controls">
+                                <button type="button" id="products-prev-page" class="button button--ghost" disabled><?php esc_html_e('Précédent', 'sempa'); ?></button>
+                                <span id="products-page-info" class="pagination-page-info"><?php esc_html_e('Page 1 sur 1', 'sempa'); ?></span>
+                                <button type="button" id="products-next-page" class="button button--ghost" disabled><?php esc_html_e('Suivant', 'sempa'); ?></button>
                             </div>
                         </div>
                         <div class="table-wrapper table-wrapper--elevated">
