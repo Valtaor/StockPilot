@@ -732,6 +732,17 @@ final class Sempa_Stocks_App
             return false;
         }
 
+        // Allow administrators
+        if (current_user_can('manage_options')) {
+            return true;
+        }
+
+        // Allow users with Gestionnaire de Stock role
+        if (current_user_can('manage_sempa_stock')) {
+            return true;
+        }
+
+        // Fallback: check email whitelist
         $user = wp_get_current_user();
         $allowed = apply_filters('sempa_stock_allowed_emails', [
             'victorfaucher@sempa.fr',

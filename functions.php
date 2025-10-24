@@ -33,6 +33,11 @@ if (file_exists($db_commandes_file)) {
     require_once $db_commandes_file;
 }
 
+$reference_data_file = __DIR__ . '/includes/functions_reference_data.php';
+if (file_exists($reference_data_file)) {
+    require_once $reference_data_file;
+}
+
 
 // ===========================================
 // 2. DÉFINITION DES CLASSES PRINCIPALES
@@ -77,6 +82,7 @@ final class Sempa_App
         if (class_exists('Sempa_Login_Redirect')) Sempa_Login_Redirect::register();
         if (class_exists('Sempa_Stocks_App')) Sempa_Stocks_App::register();
         if (class_exists('Sempa_Stocks_Login')) Sempa_Stocks_Login::register();
+        if (class_exists('Sempa_Reference_Data')) Sempa_Reference_Data::register();
 
         // *** IMPORTANT: Enregistrer les hooks AJAX ici aussi si besoin ***
         // Ou s'assurer qu'ils sont bien enregistrés DANS les classes ci-dessus

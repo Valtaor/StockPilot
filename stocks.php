@@ -45,7 +45,7 @@ if ($current_user instanceof WP_User && $current_user->exists()) {
                     'label_remember' => __('Se souvenir de moi', 'sempa'),
                     'label_log_in' => __('Se connecter', 'sempa'),
                     'remember' => true,
-                    'redirect' => home_url('/stocks'),
+                    'redirect' => home_url('/stocks-pilot'),
                     'form_id' => 'stockpilot-login-form',
                 ]); ?>
             </div>

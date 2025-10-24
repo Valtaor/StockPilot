@@ -1,0 +1,6 @@
+name,reference,brand,product_type,model,category,minStock,purchasePrice,salePrice,description
+"Presse-agrumes OL 41","300-000-041","Orangeland","Machine","OL41","machine",1,1890.00,2490.00,"Presse-agrumes professionnel"
+"CAPOT OL 41","300 104 010","Orangeland","Pièce détachée","OL41","capot",1,0.00,378.00,"Capot de rechange pour OL 41"
+"COUTEAU OL 41","300 211 023","Orangeland","Pièce détachée","OL41","couteau",2,0.00,114.00,"Couteau de remplacement"
+"Presse-agrumes Speed Pro","ZUM-SPEED","Zumex","Machine","Speed Pro","machine",1,2400.00,3200.00,"Presse-agrumes haute performance"
+"Filtre Speed Pro","ZUM-FIL-001","Zumex","Pièce détachée","Speed Pro","filtre",5,0.00,45.00,"Filtre métallique"
