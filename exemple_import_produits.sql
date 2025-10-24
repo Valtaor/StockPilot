@@ -13,14 +13,33 @@
 -- IMPORTANT : Vérifiez que vous êtes dans la bonne base de données
 USE dbs1363734;
 
--- Exemple d'insertion de produits
+-- Exemple d'insertion de produits avec structure hiérarchique
 -- Adaptez les valeurs selon vos besoins
 
-INSERT INTO `products` (`name`, `reference`, `stock`, `minStock`, `purchasePrice`, `salePrice`, `category`, `description`) VALUES
--- Remplacez les lignes ci-dessous par vos produits
-('Produit Exemple 1', 'REF-001', 0, 1, 10.00, 25.00, 'piece', 'Description du produit 1'),
-('Produit Exemple 2', 'REF-002', 0, 5, 15.50, 38.00, 'capot', 'Description du produit 2'),
-('Produit Exemple 3', 'REF-003', 0, 1, 0.00, 50.00, 'autre', NULL);
+INSERT INTO `products` (
+    `name`,
+    `reference`,
+    `brand`,
+    `product_type`,
+    `model`,
+    `category`,
+    `stock`,
+    `minStock`,
+    `purchasePrice`,
+    `salePrice`,
+    `description`
+) VALUES
+-- MACHINES
+('Presse-agrumes OL 41', '300-000-041', 'Orangeland', 'Machine', 'OL41', 'machine', 0, 1, 1890.00, 2490.00, 'Presse-agrumes professionnel'),
+('Presse-agrumes Speed Pro', 'ZUM-SPEED', 'Zumex', 'Machine', 'Speed Pro', 'machine', 0, 1, 2400.00, 3200.00, 'Presse-agrumes haute performance'),
+
+-- PIÈCES DÉTACHÉES ORANGELAND OL41
+('CAPOT OL 41', '300 104 010', 'Orangeland', 'Pièce détachée', 'OL41', 'capot', 0, 1, 0.00, 378.00, 'Capot de rechange'),
+('COUTEAU OL 41', '300 211 023', 'Orangeland', 'Pièce détachée', 'OL41', 'couteau', 0, 2, 0.00, 114.00, 'Couteau de remplacement'),
+('ROBINET NOUVEAU OL 41', '300 112 050', 'Orangeland', 'Pièce détachée', 'OL41', 'tete_robinet', 0, 1, 0.00, 159.00, NULL),
+
+-- PIÈCES DÉTACHÉES ZUMEX
+('Filtre Speed Pro', 'ZUM-FIL-001', 'Zumex', 'Pièce détachée', 'Speed Pro', 'filtre', 0, 5, 0.00, 45.00, 'Filtre métallique');
 
 -- ===============================================
 -- Notes importantes :

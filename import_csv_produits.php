@@ -103,24 +103,30 @@ if (!$header) {
 echo "<p class='info'><strong>✅ Fichier CSV ouvert :</strong> " . basename($csv_file) . "</p>";
 echo "<p class='info'><strong>📋 Colonnes détectées :</strong> " . implode(', ', $header) . "</p>";
 
-// Préparer la requête d'insertion
+// Préparer la requête d'insertion avec structure hiérarchique
 $sql = "INSERT INTO `products` (
     `name`,
     `reference`,
+    `brand`,
+    `product_type`,
+    `model`,
+    `category`,
     `stock`,
     `minStock`,
     `purchasePrice`,
     `salePrice`,
-    `category`,
     `description`
 ) VALUES (
     :name,
     :reference,
+    :brand,
+    :product_type,
+    :model,
+    :category,
     :stock,
     :minStock,
     :purchasePrice,
     :salePrice,
-    :category,
     :description
 )";
 
@@ -142,6 +148,9 @@ while (($row = fgetcsv($handle, 0, ',')) !== false) {
     // Nettoyer les données
     $name = trim($data['name'] ?? '');
     $reference = trim($data['reference'] ?? '');
+    $brand = trim($data['brand'] ?? '') ?: null;
+    $product_type = trim($data['product_type'] ?? '') ?: null;
+    $model = trim($data['model'] ?? '') ?: null;
     $stock = isset($data['stock']) ? (int)$data['stock'] : 0;
     $minStock = isset($data['minStock']) ? (int)$data['minStock'] : 1;
     $purchasePrice = isset($data['purchasePrice']) ? (float)$data['purchasePrice'] : 0.00;
@@ -162,6 +171,9 @@ while (($row = fgetcsv($handle, 0, ',')) !== false) {
         $stmt->execute([
             ':name' => $name,
             ':reference' => $reference,
+            ':brand' => $brand,
+            ':product_type' => $product_type,
+            ':model' => $model,
             ':stock' => $stock,
             ':minStock' => $minStock,
             ':purchasePrice' => $purchasePrice,
