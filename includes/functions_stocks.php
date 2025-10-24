@@ -132,8 +132,15 @@ final class Sempa_Stocks_App
             }
 
             if ($stock_column && $min_column) {
-                $alerts_query = 'SELECT * FROM ' . $stock_table_sql
-                    . ' WHERE ' . Sempa_Stocks_DB::escape_identifier($min_column) . ' > 0'
+                $alerts_query = 'SELECT p.*,
+                    b.name AS brand_name,
+                    pt.name AS product_type_name,
+                    m.name AS model_name
+                    FROM ' . $stock_table_sql . ' AS p
+                    LEFT JOIN brands AS b ON p.brand_id = b.id
+                    LEFT JOIN product_types AS pt ON p.product_type_id = pt.id
+                    LEFT JOIN models AS m ON p.model_id = m.id
+                    WHERE ' . Sempa_Stocks_DB::escape_identifier($min_column) . ' > 0'
                     . ' AND ' . Sempa_Stocks_DB::escape_identifier($stock_column) . ' <= ' . Sempa_Stocks_DB::escape_identifier($min_column)
                     . ' ORDER BY ' . Sempa_Stocks_DB::escape_identifier($stock_column) . ' ASC LIMIT 20';
 
@@ -190,10 +197,21 @@ final class Sempa_Stocks_App
 
         if (Sempa_Stocks_DB::table_exists('stocks_sempa')) {
             $stock_table = Sempa_Stocks_DB::table('stocks_sempa');
+            $stock_table_sql = Sempa_Stocks_DB::escape_identifier($stock_table);
             $order_column = Sempa_Stocks_DB::resolve_column('stocks_sempa', 'designation', false) ?: Sempa_Stocks_DB::resolve_column('stocks_sempa', 'reference', false);
-            $query = 'SELECT * FROM ' . Sempa_Stocks_DB::escape_identifier($stock_table);
+
+            // Query with JOINs to get brand, product_type, and model names
+            $query = "SELECT p.*,
+                      b.name AS brand_name,
+                      pt.name AS product_type_name,
+                      m.name AS model_name
+                      FROM {$stock_table_sql} AS p
+                      LEFT JOIN brands AS b ON p.brand_id = b.id
+                      LEFT JOIN product_types AS pt ON p.product_type_id = pt.id
+                      LEFT JOIN models AS m ON p.model_id = m.id";
+
             if ($order_column) {
-                $query .= ' ORDER BY ' . Sempa_Stocks_DB::escape_identifier($order_column) . ' ASC';
+                $query .= ' ORDER BY p.' . Sempa_Stocks_DB::escape_identifier($order_column) . ' ASC';
             }
 
             $products = $db->get_results($query, ARRAY_A) ?: [];
@@ -225,6 +243,9 @@ final class Sempa_Stocks_App
         $payload = [
             'reference' => sanitize_text_field($data['reference'] ?? ''),
             'designation' => sanitize_text_field($data['designation'] ?? ''),
+            'brand_id' => isset($data['brand_id']) && $data['brand_id'] > 0 ? (int) $data['brand_id'] : null,
+            'product_type_id' => isset($data['product_type_id']) && $data['product_type_id'] > 0 ? (int) $data['product_type_id'] : null,
+            'model_id' => isset($data['model_id']) && $data['model_id'] > 0 ? (int) $data['model_id'] : null,
             'categorie' => sanitize_text_field($data['categorie'] ?? ''),
             'fournisseur' => sanitize_text_field($data['fournisseur'] ?? ''),
             'prix_achat' => self::sanitize_decimal($data['prix_achat'] ?? 0),
@@ -290,7 +311,20 @@ final class Sempa_Stocks_App
         }
 
         $id_column = Sempa_Stocks_DB::resolve_column('stocks_sempa', 'id', false) ?: 'id';
-        $product = $db->get_row($db->prepare('SELECT * FROM ' . Sempa_Stocks_DB::escape_identifier($table) . ' WHERE ' . Sempa_Stocks_DB::escape_identifier($id_column) . ' = %d', $id), ARRAY_A);
+        $table_sql = Sempa_Stocks_DB::escape_identifier($table);
+
+        // Get product with brand, product_type, and model names
+        $query = "SELECT p.*,
+                  b.name AS brand_name,
+                  pt.name AS product_type_name,
+                  m.name AS model_name
+                  FROM {$table_sql} AS p
+                  LEFT JOIN brands AS b ON p.brand_id = b.id
+                  LEFT JOIN product_types AS pt ON p.product_type_id = pt.id
+                  LEFT JOIN models AS m ON p.model_id = m.id
+                  WHERE p." . Sempa_Stocks_DB::escape_identifier($id_column) . ' = %d';
+
+        $product = $db->get_row($db->prepare($query, $id), ARRAY_A);
         wp_send_json_success([
             'product' => self::format_product($product ?: []),
         ]);
@@ -535,10 +569,21 @@ final class Sempa_Stocks_App
         }
 
         $stock_table = Sempa_Stocks_DB::table('stocks_sempa');
+        $stock_table_sql = Sempa_Stocks_DB::escape_identifier($stock_table);
         $order_column = Sempa_Stocks_DB::resolve_column('stocks_sempa', 'designation', false) ?: Sempa_Stocks_DB::resolve_column('stocks_sempa', 'reference', false);
-        $query = 'SELECT * FROM ' . Sempa_Stocks_DB::escape_identifier($stock_table);
+
+        // Query with JOINs to get brand, product_type, and model names
+        $query = "SELECT p.*,
+                  b.name AS brand_name,
+                  pt.name AS product_type_name,
+                  m.name AS model_name
+                  FROM {$stock_table_sql} AS p
+                  LEFT JOIN brands AS b ON p.brand_id = b.id
+                  LEFT JOIN product_types AS pt ON p.product_type_id = pt.id
+                  LEFT JOIN models AS m ON p.model_id = m.id";
+
         if ($order_column) {
-            $query .= ' ORDER BY ' . Sempa_Stocks_DB::escape_identifier($order_column) . ' ASC';
+            $query .= ' ORDER BY p.' . Sempa_Stocks_DB::escape_identifier($order_column) . ' ASC';
         }
 
         $products = $db->get_results($query, ARRAY_A);
@@ -549,7 +594,7 @@ final class Sempa_Stocks_App
 
         $output = fopen('php://output', 'w');
         fputcsv($output, [
-            'ID', 'Référence', 'Désignation', 'Catégorie', 'Fournisseur', 'Prix achat', 'Prix vente', 'Stock actuel', 'Stock minimum', 'Stock maximum', 'Emplacement', 'Date entrée', 'Date modification', 'Notes', 'Document', 'Ajouté par',
+            'ID', 'Référence', 'Désignation', 'Marque', 'Type de produit', 'Modèle', 'Catégorie', 'Fournisseur', 'Prix achat', 'Prix vente', 'Stock actuel', 'Stock minimum', 'Stock maximum', 'Emplacement', 'Date entrée', 'Date modification', 'Notes', 'Document', 'Ajouté par',
         ]);
 
         foreach ($products ?: [] as $product) {
@@ -557,6 +602,9 @@ final class Sempa_Stocks_App
                 Sempa_Stocks_DB::value($product, 'stocks_sempa', 'id', ''),
                 Sempa_Stocks_DB::value($product, 'stocks_sempa', 'reference', ''),
                 Sempa_Stocks_DB::value($product, 'stocks_sempa', 'designation', ''),
+                $product['brand_name'] ?? '',
+                $product['product_type_name'] ?? '',
+                $product['model_name'] ?? '',
                 Sempa_Stocks_DB::value($product, 'stocks_sempa', 'categorie', ''),
                 Sempa_Stocks_DB::value($product, 'stocks_sempa', 'fournisseur', ''),
                 Sempa_Stocks_DB::value($product, 'stocks_sempa', 'prix_achat', ''),
@@ -839,6 +887,12 @@ final class Sempa_Stocks_App
             'id' => (int) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'id', 0),
             'reference' => (string) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'reference', ''),
             'designation' => (string) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'designation', ''),
+            'brand_id' => Sempa_Stocks_DB::value($product, 'stocks_sempa', 'brand_id', null) !== null ? (int) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'brand_id', 0) : null,
+            'brand_name' => (string) ($product['brand_name'] ?? ''),
+            'product_type_id' => Sempa_Stocks_DB::value($product, 'stocks_sempa', 'product_type_id', null) !== null ? (int) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'product_type_id', 0) : null,
+            'product_type_name' => (string) ($product['product_type_name'] ?? ''),
+            'model_id' => Sempa_Stocks_DB::value($product, 'stocks_sempa', 'model_id', null) !== null ? (int) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'model_id', 0) : null,
+            'model_name' => (string) ($product['model_name'] ?? ''),
             'categorie' => (string) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'categorie', ''),
             'fournisseur' => (string) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'fournisseur', ''),
             'prix_achat' => (float) Sempa_Stocks_DB::value($product, 'stocks_sempa', 'prix_achat', 0),
